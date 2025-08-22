@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "TVA Script Schema v2.1 (Safe Policy Applied)",
+  "title": "TVA Script Schema v2.2 (Continuity Locked)",
   "type": "object",
   "required": ["project", "style", "continuity", "scenes", "constraints"],
   "properties": {
@@ -90,25 +90,36 @@
               "costume": {
                 "type": "object",
                 "properties": {
-                  "top": { "type": "string" },
-                  "bottom": { "type": "string" },
-                  "shoes": { "type": "string" },
-                  "accessories": { "type": "string" }
+                  "top": { "type": "string", "enum": ["piyama rajut biru muda tanpa kerah, lengan panjang"] },
+                  "bottom": { "type": "string", "enum": ["celana piyama biru muda panjang"] },
+                  "shoes": { "type": "string", "enum": ["tidak memakai alas kaki"] },
+                  "accessories": { "type": "string", "enum": ["tidak ada"] }
                 }
               }
             }
           }
         },
-        "prop_rules": { "type": "array", "items": { "type": "string" } },
+        "prop_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["prop_id", "description", "fixed_color"],
+            "properties": {
+              "prop_id": { "type": "string" },
+              "description": { "type": "string" },
+              "fixed_color": { "type": "string" }
+            }
+          }
+        },
         "location_rules": {
           "type": "array",
           "items": {
             "type": "object",
             "required": ["location_id", "description", "lighting"],
             "properties": {
-              "location_id": { "type": "string" },
-              "description": { "type": "string" },
-              "lighting": { "type": "string" }
+              "location_id": { "type": "string", "enum": ["bathroom_us"] },
+              "description": { "type": "string", "enum": ["Kamar mandi dengan dinding keramik putih, pintu kayu putih, jendela kayu putih, wastafel modern dengan cermin kotak besar di atasnya"] },
+              "lighting": { "type": "string", "enum": ["soft_daylight"] }
             }
           }
         },
@@ -123,7 +134,7 @@
         "required": ["scene_id", "duration_sec", "location", "shots", "audio", "transitions"],
         "properties": {
           "scene_id": { "type": "string" },
-          "duration_sec": { "type": "number", "minimum": 1, "maximum": 20 },
+          "duration_sec": { "type": "number", "minimum": 1, "maximum": 8 },
           "location": { "type": "string" },
           "shots": { "type": "array", "items": { "type": "object" } },
           "dialogue": {
@@ -169,7 +180,7 @@
           ]
         },
         "max_total_duration": { "type": "number", "maximum": 300 },
-        "checksum": { "type": "string" }
+        "checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
       }
     },
 
