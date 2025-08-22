@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "TVA Script Schema v1.0",
+  "title": "TVA Script Schema v1.1",
   "type": "object",
   "required": ["project", "style", "continuity", "scenes", "constraints"],
   "properties": {
@@ -11,15 +11,14 @@
         "project_id": { "type": "string", "pattern": "^[a-z0-9\\-]{3,}$" },
         "version": { "type": "string" },
         "seed": { "type": "integer", "minimum": 0 },
-        "rng_provider": { "type": "string", "enum": ["builtin", "stable", "deterministic"] },
+        "rng_provider": { "type": "string", "enum": ["builtin","stable","deterministic"] },
         "assets": {
           "type": "object",
-          "required": ["characters", "locations", "props", "music", "sfx", "refs"],
+          "required": ["characters","locations","props","sfx","refs"],
           "properties": {
             "characters": { "type": "array", "items": { "type": "object" } },
             "locations": { "type": "array", "items": { "type": "object" } },
             "props": { "type": "array", "items": { "type": "object" } },
-            "music": { "type": "array", "items": { "type": "object" } },
             "sfx": { "type": "array", "items": { "type": "object" } },
             "refs": { "type": "array", "items": { "type": "object" } }
           }
@@ -28,28 +27,25 @@
     },
     "style": {
       "type": "object",
-      "required": ["visual", "camera_grammar", "text_policy", "style_lock", "negatives"],
+      "required": ["visual","camera_grammar","text_policy","style_lock","negatives"],
       "properties": {
         "visual": {
           "type": "object",
-          "required": ["animation", "render", "resolution", "fps", "aspect", "lighting", "color_management"],
+          "required": ["animation","render","resolution","fps","aspect","lighting","color_management"],
           "properties": {
             "animation": { "type": "string", "enum": ["3D_cartoon_cinematic"] },
             "render": { "type": "string", "enum": ["PBR_soft"] },
-            "resolution": { "type": "string", "enum": ["1280x720"] }, 
+            "resolution": { "type": "string", "enum": ["1280x720"] },
             "fps": { "type": "integer", "enum": [24] },
             "aspect": { "type": "string", "enum": ["16:9"] },
             "lighting": { "type": "string", "enum": ["soft_daylight"] },
             "color_management": { "type": "string", "enum": ["ACEScg_sRGB_out"] }
           }
         },
-        "camera_grammar": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
+        "camera_grammar": { "type": "array", "items": { "type": "string" } },
         "text_policy": {
           "type": "object",
-          "required": ["max_chars_dialogue", "language", "tone", "reading_level"],
+          "required": ["max_chars_dialogue","language","tone","reading_level"],
           "properties": {
             "max_chars_dialogue": { "type": "integer", "maximum": 3500 },
             "language": { "type": "string", "enum": ["id-ID"] },
@@ -63,9 +59,34 @@
     },
     "continuity": {
       "type": "object",
-      "required": ["character_bible", "prop_rules", "continuity_lock"],
+      "required": ["character_bible","location_bible","prop_rules","continuity_lock"],
       "properties": {
-        "character_bible": { "type": "array", "items": { "type": "object" } },
+        "character_bible": {
+          "type": "array",
+          "description": "Mendefinisikan kostum, warna, atribut tetap untuk tiap karakter",
+          "items": {
+            "type": "object",
+            "required": ["char_id","costume","palette"],
+            "properties": {
+              "char_id": { "type": "string" },
+              "costume": { "type": "string" },
+              "palette": { "type": "string" }
+            }
+          }
+        },
+        "location_bible": {
+          "type": "array",
+          "description": "Menjaga konsistensi background/lokasi antar scene",
+          "items": {
+            "type": "object",
+            "required": ["loc_id","background","palette"],
+            "properties": {
+              "loc_id": { "type": "string" },
+              "background": { "type": "string" },
+              "palette": { "type": "string" }
+            }
+          }
+        },
         "prop_rules": { "type": "array", "items": { "type": "string" } },
         "continuity_lock": { "type": "boolean", "const": true }
       }
@@ -76,37 +97,4 @@
         "type": "object",
         "required": ["scene_id","duration_sec","location","shots","audio","transitions"],
         "properties": {
-          "scene_id": { "type": "string" },
-          "duration_sec": { "type": "number", "minimum": 1, "maximum": 20 },
-          "location": { "type": "string" },
-          "shots": { "type": "array", "items": { "type": "object" } },
-          "dialogue": {
-            "type": "array",
-            "description": "Optional only for subtitle reference, not rendered directly into video",
-            "items": {
-              "type": "object",
-              "required": ["char_id","voice_id","text"],
-              "properties": {
-                "char_id": { "type": "string" },
-                "voice_id": { "type": "string" },
-                "text": { "type": "string", "maxLength": 3500 }
-              }
-            }
-          },
-          "audio": { "type": "object" },
-          "transitions": { "type": "object" }
-        }
-      }
-    },
-    "constraints": {
-      "type": "object",
-      "required": ["forbidden","max_total_duration","checksum"],
-      "properties": {
-        "forbidden": { "type": "array", "items": { "type": "string" } },
-        "max_total_duration": { "type": "number", "maximum": 300 },
-        "checksum": { "type": "string" }
-      }
-    },
-    "violations": { "type": "array", "items": { "type": "string" } }
-  }
-}
+          "scene_id": { "type": "string"
