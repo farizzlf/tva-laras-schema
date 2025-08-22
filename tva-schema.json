@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "TVA Script Schema v2.0",
+  "title": "TVA Script Schema v2.1 (Safe Policy Applied)",
   "type": "object",
   "required": ["project", "style", "continuity", "scenes", "constraints"],
   "properties": {
@@ -61,7 +61,18 @@
           }
         },
         "style_lock": { "type": "boolean", "const": true },
-        "negatives": { "type": "array", "items": { "type": "string" } }
+        "negatives": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "political_content",
+            "sexual_explicit",
+            "medical_advice",
+            "self_harm",
+            "hate_speech",
+            "violence_gore"
+          ]
+        }
       }
     },
 
@@ -144,7 +155,19 @@
       "type": "object",
       "required": ["forbidden", "max_total_duration", "checksum"],
       "properties": {
-        "forbidden": { "type": "array", "items": { "type": "string" } },
+        "forbidden": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "politics",
+            "sexual_explicit",
+            "medical",
+            "self_harm",
+            "hate_speech",
+            "election_campaigns",
+            "violence"
+          ]
+        },
         "max_total_duration": { "type": "number", "maximum": 300 },
         "checksum": { "type": "string" }
       }
