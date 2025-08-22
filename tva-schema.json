@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "TVA Script Schema v2.2 (Continuity Locked)",
+  "title": "TVA Script Schema Laras v3.0 (Default Template, Continuity Locked)",
   "type": "object",
   "required": ["project", "style", "continuity", "scenes", "constraints"],
   "properties": {
@@ -40,13 +40,13 @@
           "type": "object",
           "required": ["animation", "render", "resolution", "fps", "aspect", "lighting", "color_management"],
           "properties": {
-            "animation": { "type": "string", "enum": ["3D_cartoon_cinematic"] },
-            "render": { "type": "string", "enum": ["PBR_soft"] },
-            "resolution": { "type": "string", "enum": ["1280x720"] },
-            "fps": { "type": "integer", "enum": [24] },
-            "aspect": { "type": "string", "enum": ["16:9"] },
-            "lighting": { "type": "string", "enum": ["soft_daylight"] },
-            "color_management": { "type": "string", "enum": ["ACEScg_sRGB_out"] }
+            "animation": { "type": "string" },
+            "render": { "type": "string" },
+            "resolution": { "type": "string" },
+            "fps": { "type": "integer" },
+            "aspect": { "type": "string" },
+            "lighting": { "type": "string" },
+            "color_management": { "type": "string" }
           }
         },
         "camera_grammar": { "type": "array", "items": { "type": "string" } },
@@ -55,9 +55,9 @@
           "required": ["max_chars_dialogue", "language", "tone", "reading_level"],
           "properties": {
             "max_chars_dialogue": { "type": "integer", "maximum": 3500 },
-            "language": { "type": "string", "enum": ["id-ID"] },
-            "tone": { "type": "string", "enum": ["ceria_lugas"] },
-            "reading_level": { "type": "string", "enum": ["anak_smp_sederhana"] }
+            "language": { "type": "string" },
+            "tone": { "type": "string" },
+            "reading_level": { "type": "string" }
           }
         },
         "style_lock": { "type": "boolean", "const": true },
@@ -90,10 +90,10 @@
               "costume": {
                 "type": "object",
                 "properties": {
-                  "top": { "type": "string", "enum": ["piyama rajut biru muda tanpa kerah, lengan panjang"] },
-                  "bottom": { "type": "string", "enum": ["celana piyama biru muda panjang"] },
-                  "shoes": { "type": "string", "enum": ["tidak memakai alas kaki"] },
-                  "accessories": { "type": "string", "enum": ["tidak ada"] }
+                  "top": { "type": "string" },
+                  "bottom": { "type": "string" },
+                  "shoes": { "type": "string" },
+                  "accessories": { "type": "string" }
                 }
               }
             }
@@ -117,9 +117,9 @@
             "type": "object",
             "required": ["location_id", "description", "lighting"],
             "properties": {
-              "location_id": { "type": "string", "enum": ["bathroom_us"] },
-              "description": { "type": "string", "enum": ["Kamar mandi dengan dinding keramik putih, pintu kayu putih, jendela kayu putih, wastafel modern dengan cermin kotak besar di atasnya"] },
-              "lighting": { "type": "string", "enum": ["soft_daylight"] }
+              "location_id": { "type": "string" },
+              "description": { "type": "string" },
+              "lighting": { "type": "string" }
             }
           }
         },
@@ -153,7 +153,7 @@
           "audio": {
             "type": "object",
             "properties": {
-              "music": { "type": "string", "enum": ["none"] },
+              "music": { "type": "string" },
               "sfx": { "type": "array", "items": { "type": "string" } }
             }
           },
