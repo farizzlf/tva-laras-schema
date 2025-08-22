@@ -16,68 +16,12 @@
           "type": "object",
           "required": ["characters", "locations", "props", "music", "sfx", "refs"],
           "properties": {
-            "characters": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": ["char_id", "name", "look", "voice_id", "lock"],
-                "properties": {
-                  "char_id": { "type": "string" },
-                  "name": { "type": "string" },
-                  "look": {
-                    "type": "object",
-                    "required": ["model_sheet_ref", "palette", "height_cm", "tags"],
-                    "properties": {
-                      "model_sheet_ref": { "type": "string" },
-                      "palette": {
-                        "type": "object",
-                        "required": ["primary", "secondary", "skin", "hair", "eye"],
-                        "properties": {
-                          "primary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
-                          "secondary": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
-                          "skin": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
-                          "hair": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
-                          "eye": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" }
-                        }
-                      },
-                      "height_cm": { "type": "integer", "minimum": 30, "maximum": 250 },
-                      "tags": { "type": "array", "items": { "type": "string" } }
-                    }
-                  },
-                  "voice_id": { "type": "string" },
-                  "voice_style": { "type": "string" },
-                  "lock": { "type": "boolean", "const": true }
-                }
-              }
-            },
-            "locations": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "required": ["loc_id", "name", "env_ref", "time_of_day", "weather", "lock"],
-                "properties": {
-                  "loc_id": { "type": "string" },
-                  "name": { "type": "string" },
-                  "env_ref": { "type": "string" },
-                  "time_of_day": { "type": "string", "enum": ["dawn","morning","noon","afternoon","dusk","night"] },
-                  "weather": { "type": "string" },
-                  "lock": { "type": "boolean", "const": true }
-                }
-              }
-            },
-            "props": { "type": "array", "items": { "type": "object", "required": ["prop_id","name","ref","lock"], "properties": {
-              "prop_id": {"type":"string"}, "name":{"type":"string"}, "ref":{"type":"string"}, "lock":{"type":"boolean","const": true}
-            } } },
-            "music": { "type": "array", "items": { "type": "object", "required": ["music_id","name","mood","bpm","lock"], "properties": {
-              "music_id":{"type":"string"},"name":{"type":"string"},"mood":{"type":"string"},"bpm":{"type":"integer"},"lock":{"type":"boolean","const": true}
-            } } },
-            "sfx": { "type": "array", "items": { "type": "object", "required": ["sfx_id","name","ref","lock"], "properties": {
-              "sfx_id":{"type":"string"},"name":{"type":"string"},"ref":{"type":"string"},"lock":{"type":"boolean","const": true}
-            } } },
-            "refs": { "type": "array", "items": { "type": "object", "required": ["ref_id","type","uri","lock"], "properties": {
-              "ref_id":{"type":"string"}, "type":{"type":"string","enum":["image","video","style","lora","embedding"]},
-              "uri":{"type":"string"}, "lock":{"type":"boolean","const": true}
-            } } }
+            "characters": { "type": "array", "items": { "type": "object" } },
+            "locations": { "type": "array", "items": { "type": "object" } },
+            "props": { "type": "array", "items": { "type": "object" } },
+            "music": { "type": "array", "items": { "type": "object" } },
+            "sfx": { "type": "array", "items": { "type": "object" } },
+            "refs": { "type": "array", "items": { "type": "object" } }
           }
         }
       }
@@ -92,7 +36,7 @@
           "properties": {
             "animation": { "type": "string", "enum": ["3D_cartoon_cinematic"] },
             "render": { "type": "string", "enum": ["PBR_soft"] },
-            "resolution": { "type": "string", "enum": ["1920x1080"] },
+            "resolution": { "type": "string", "enum": ["1280x720"] }, 
             "fps": { "type": "integer", "enum": [24] },
             "aspect": { "type": "string", "enum": ["16:9"] },
             "lighting": { "type": "string", "enum": ["soft_daylight"] },
@@ -101,10 +45,7 @@
         },
         "camera_grammar": {
           "type": "array",
-          "items": { "type": "string", "enum": [
-            "ESTABLISHING","WIDE","MEDIUM","CLOSE","ECU",
-            "PAN_L","PAN_R","TILT_UP","TILT_DOWN","DOLLY_IN","DOLLY_OUT","TRUCK_L","TRUCK_R","CRANE_UP","CRANE_DOWN","LOCKED_OFF"
-          ] }
+          "items": { "type": "string" }
         },
         "text_policy": {
           "type": "object",
@@ -117,29 +58,14 @@
           }
         },
         "style_lock": { "type": "boolean", "const": true },
-        "negatives": {
-          "type": "array",
-          "items": { "type": "string" }
-        }
+        "negatives": { "type": "array", "items": { "type": "string" } }
       }
     },
     "continuity": {
       "type": "object",
       "required": ["character_bible", "prop_rules", "continuity_lock"],
       "properties": {
-        "character_bible": {
-          "type": "array",
-          "items": { "type": "object",
-            "required": ["char_id","immutable_traits"],
-            "properties": {
-              "char_id": { "type": "string" },
-              "immutable_traits": {
-                "type": "array",
-                "items": { "type": "string" }
-              }
-            }
-          }
-        },
+        "character_bible": { "type": "array", "items": { "type": "object" } },
         "prop_rules": { "type": "array", "items": { "type": "string" } },
         "continuity_lock": { "type": "boolean", "const": true }
       }
@@ -148,47 +74,15 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["scene_id","duration_sec","location","shots","dialogue","audio","transitions"],
+        "required": ["scene_id","duration_sec","location","shots","audio","transitions"],
         "properties": {
-          "scene_id": { "type": "string", "pattern": "^s[0-9]+(\\.[0-9]+)?$" },
+          "scene_id": { "type": "string" },
           "duration_sec": { "type": "number", "minimum": 1, "maximum": 20 },
           "location": { "type": "string" },
-          "shots": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": ["shot_id","camera","action","participants","locks"],
-              "properties": {
-                "shot_id": { "type": "string" },
-                "camera": {
-                  "type": "object",
-                  "required": ["type","move","fov","focus_on"],
-                  "properties": {
-                    "type": { "type": "string", "enum": ["ESTABLISHING","WIDE","MEDIUM","CLOSE","ECU"] },
-                    "move": { "type": "string", "enum": ["LOCKED_OFF","PAN_L","PAN_R","TILT_UP","TILT_DOWN","DOLLY_IN","DOLLY_OUT","TRUCK_L","TRUCK_R","CRANE_UP","CRANE_DOWN"] },
-                    "fov": { "type": "string", "enum": ["28mm","35mm","50mm","85mm"] },
-                    "focus_on": { "type": "string" }
-                  }
-                },
-                "action": { "type": "string" },
-                "participants": {
-                  "type": "array",
-                  "items": { "type": "string" }
-                },
-                "locks": {
-                  "type": "object",
-                  "required": ["character_costume","palette","lighting"],
-                  "properties": {
-                    "character_costume": { "type": "boolean", "const": true },
-                    "palette": { "type": "boolean", "const": true },
-                    "lighting": { "type": "boolean", "const": true }
-                  }
-                }
-              }
-            }
-          },
+          "shots": { "type": "array", "items": { "type": "object" } },
           "dialogue": {
             "type": "array",
+            "description": "Optional only for subtitle reference, not rendered directly into video",
             "items": {
               "type": "object",
               "required": ["char_id","voice_id","text"],
@@ -199,23 +93,8 @@
               }
             }
           },
-          "audio": {
-            "type": "object",
-            "required": ["music_cue","sfx_cues"],
-            "properties": {
-              "music_cue": { "type": "string" },
-              "sfx_cues": { "type": "array", "items": { "type": "string" } }
-            }
-          },
-          "transitions": {
-            "type": "object",
-            "required": ["from","to","style"],
-            "properties": {
-              "from": { "type": "string" },
-              "to": { "type": "string" },
-              "style": { "type": "string", "enum": ["cut","fade","dissolve","wipe"] }
-            }
-          }
+          "audio": { "type": "object" },
+          "transitions": { "type": "object" }
         }
       }
     },
@@ -225,7 +104,7 @@
       "properties": {
         "forbidden": { "type": "array", "items": { "type": "string" } },
         "max_total_duration": { "type": "number", "maximum": 300 },
-        "checksum": { "type": "string", "description": "sha256 of concatenated IDs and locked fields" }
+        "checksum": { "type": "string" }
       }
     },
     "violations": { "type": "array", "items": { "type": "string" } }
