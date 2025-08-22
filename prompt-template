@@ -1,0 +1,18 @@
+Buatkan saya JSON Schema draft-07 versi *Laras JSON*, untuk TVA Script. 
+Schema ini harus sangat detail agar menjaga konsistensi dalam produksi animasi.
+
+🔑 Aturan Schema:
+1. Kostum karakter HARUS konsisten → gunakan enum untuk top, bottom, shoes, accessories.
+2. Lokasi HARUS konsisten → gunakan enum deskripsi & enum lighting.
+3. Props HARUS detail → wajib punya prop_id, description, dan fixed_color.
+4. Durasi scene → minimal 1 detik, maksimal 8 detik.
+5. Tambahkan continuity lock agar tidak ada improvisasi.
+6. Tambahkan constraints: forbidden topics (politik, medis, kekerasan, dll) dan checksum SHA256.
+7. Output dalam format JSON Schema draft-07 valid, dengan struktur Laras JSON (project, style, continuity, scenes, constraints).
+
+🎬 Setelah schema selesai, buatkan juga:
+-
+-
+-
+
+Pastikan hasil JSON Schema dan JSON instance bisa langsung dipakai tanpa error.
