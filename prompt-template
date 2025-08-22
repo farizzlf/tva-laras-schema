@@ -1,18 +1,35 @@
-Buatkan saya JSON Schema draft-07 versi *Laras JSON*, untuk TVA Script. 
-Schema ini harus sangat detail agar menjaga konsistensi dalam produksi animasi.
+Buatkan JSON animasi menggunakan **Laras JSON Schema v3.0 (Default Template, Continuity Locked)**.  
+Ikuti aturan berikut:
 
-🔑 Aturan Schema:
-1. Kostum karakter HARUS konsisten → gunakan enum untuk top, bottom, shoes, accessories.
-2. Lokasi HARUS konsisten → gunakan enum deskripsi & enum lighting.
-3. Props HARUS detail → wajib punya prop_id, description, dan fixed_color.
-4. Durasi scene → minimal 1 detik, maksimal 8 detik.
-5. Tambahkan continuity lock agar tidak ada improvisasi.
-6. Tambahkan constraints: forbidden topics (politik, medis, kekerasan, dll) dan checksum SHA256.
-7. Output dalam format JSON Schema draft-07 valid, dengan struktur Laras JSON (project, style, continuity, scenes, constraints).
+1️⃣ **Gunakan schema Laras v3.0** sebagai referensi validasi.  
+2️⃣ **Isi project** dengan project_id unik, versi, seed (random int), rng_provider ("deterministic"), dan daftar assets (characters, locations, props, sfx, refs).  
+3️⃣ **Style** wajib konsisten:  
+   - animation = "3D_cartoon_cinematic"  
+   - render = "PBR_soft"  
+   - resolution = "1280x720"  
+   - fps = 24  
+   - aspect = "16:9"  
+   - lighting = "soft_daylight"  
+   - color_management = "ACEScg_sRGB_out"  
+   - text_policy: max_chars_dialogue ≤ 3500, language "id-ID", tone "ceria_lugas", reading_level "anak_smp_sederhana"  
+   - style_lock = true  
+4️⃣ **Continuity wajib**:  
+   - character_bible: daftar char_id + kostum detail (top, bottom, shoes, accessories).  
+   - prop_rules: daftar props dengan id, deskripsi, warna fix.  
+   - location_rules: lokasi dengan id, deskripsi, lighting.  
+   - continuity_lock = true.  
+5️⃣ **Scenes**:  
+   - setiap scene_id unik, duration_sec 1–8 detik  
+   - location wajib referensi ke location_id  
+   - shots minimal 1 (isi dengan deskripsi kamera + aksi)  
+   - dialogue opsional, hanya referensi subtitle (tidak embed langsung di video)  
+   - audio: tentukan music ("none" jika tidak ada) + sfx array  
+   - transitions: isi minimal dengan {"in":"cut","out":"cut"}  
+6️⃣ **Constraints**:  
+   - forbidden = default list  
+   - max_total_duration ≤ 300  
+   - checksum isi dengan string dummy "0000..." 64 hex  
+7️⃣ Jangan sertakan penjelasan, hanya output JSON valid.  
 
-🎬 Setelah schema selesai, buatkan juga:
--
--
--
-
-Pastikan hasil JSON Schema dan JSON instance bisa langsung dipakai tanpa error.
+⛔ Larangan: Jangan keluarkan enum yang tidak ada di schema, jangan improvisasi dengan metadata di luar struktur.  
+✅ Output akhir: JSON lengkap, valid, bisa langsung dipakai.
